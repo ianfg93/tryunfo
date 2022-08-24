@@ -52,6 +52,7 @@ class App extends React.Component {
     }), () => {
       this.setState({
         cardName: '',
+        cardDescription: '',
         cardAttr1: 0,
         cardAttr2: 0,
         cardAttr3: 0,
@@ -90,6 +91,18 @@ class App extends React.Component {
           cardRare={ cardRare }
           cardTrunfo={ cardTrunfo }
         />
+        {/* {
+          data.map((e) => <Card
+          cardName={ e.cardName }
+          cardDescription={ e.cardDescription }
+          cardAttr1={ e.cardAttr1 }
+          cardAttr2={ e.cardAttr2 }
+          cardAttr3={ e.cardAttr3 }
+          cardImage={ e.cardImage }
+          cardRare={ e.cardRare }
+          cardTrunfo={ e.cardTrunfo }
+          />)
+        } */}
       </div>
     );
   }
