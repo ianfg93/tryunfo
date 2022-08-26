@@ -70,9 +70,10 @@ class App extends React.Component {
   render() {
     const { cardName, cardDescription, cardAttr1, cardAttr2, cardAttr3, cardImage,
       cardRare, cardTrunfo, isSaveButtonDisabled, data, prevOn, hasTrunfo } = this.state;
+
     return (
       <div>
-        <h1>Adicionar nova carta</h1>
+        <h1>Tryunfo</h1>
         <Form
           onInputChange={ this.onInputChange }
           cardName={ cardName }
@@ -98,7 +99,7 @@ class App extends React.Component {
           cardTrunfo={ cardTrunfo }
         />
         {
-          prevOn === true && data.map((e) => (
+          prevOn && data.map((e) => (
             <Card
               key={ e.cardName }
               cardName={ e.cardName }

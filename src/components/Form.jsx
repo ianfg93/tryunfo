@@ -6,6 +6,7 @@ class Form extends React.Component {
     const { cardName, cardDescription, cardAttr1, cardAttr2, cardAttr3,
       cardImage, cardRare, cardTrunfo, hasTrunfo,
       isSaveButtonDisabled, onInputChange, onSaveButtonClick } = this.props;
+
     return (
       <form>
         <label htmlFor="name-input">
@@ -21,7 +22,6 @@ class Form extends React.Component {
         <label htmlFor="description-input">
           Descrição
           <textarea
-            type="textarea"
             data-testid="description-input"
             value={ cardDescription }
             onChange={ onInputChange }
@@ -94,7 +94,14 @@ class Form extends React.Component {
           type="button"
           data-testid="save-button"
           disabled={ isSaveButtonDisabled }
-          onClick={ () => onSaveButtonClick(cardName, cardDescription, cardImage) }
+          onClick={ () => onSaveButtonClick({ cardName,
+            cardDescription,
+            cardImage,
+            cardAttr1,
+            cardAttr2,
+            cardAttr3,
+            cardRare,
+            cardTrunfo }) }
           name="isSaveButtonDisable"
         >
           Salvar
