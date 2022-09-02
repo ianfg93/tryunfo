@@ -18,6 +18,26 @@ class App extends React.Component {
     prevOn: false,
   };
 
+  onSaveButtonClick = (objetoInfo) => {
+    const { cardTrunfo, hasTrunfo } = this.state;
+    this.setState({ hasTrunfo: hasTrunfo || cardTrunfo });
+    this.setState((prev) => ({
+      data: [...prev.data, objetoInfo],
+      prevOn: true,
+    }), () => {
+      this.setState({
+        cardName: '',
+        cardDescription: '',
+        cardAttr1: 0,
+        cardAttr2: 0,
+        cardAttr3: 0,
+        cardImage: '',
+        cardRare: 'normal',
+        cardTrunfo: false,
+      });
+    });
+  };
+
   onInputChange = (event) => {
     const { target } = event;
     const { name, type } = target;
@@ -48,23 +68,15 @@ class App extends React.Component {
     );
   };
 
-  onSaveButtonClick = (objetoInfo) => {
-    const { cardTrunfo } = this.state;
-    if (cardTrunfo) return this.setState({ hasTrunfo: true });
-    this.setState((prevState) => ({
-      data: [...prevState.data, objetoInfo],
-      prevOn: true,
-    }), () => {
-      this.setState({
-        cardName: '',
-        cardDescription: '',
-        cardAttr1: 0,
-        cardAttr2: 0,
-        cardAttr3: 0,
-        cardImage: '',
-        cardRare: 'normal',
-      });
+  btnDelete = (event) => {
+    const { target } = event;
+    const { id } = target;
+    const { data } = this.state;
+    const cartas = data.filter(({ cardName }) => cardName !== id);
+    this.setState({
+      data: cartas,
     });
+    this.setState({ hasTrunfo: false });
   };
 
   render() {
@@ -89,6 +101,7 @@ class App extends React.Component {
           hasTrunfo={ hasTrunfo }
         />
         <Card
+          onInputChange={ this.onInputChange }
           cardName={ cardName }
           cardDescription={ cardDescription }
           cardAttr1={ cardAttr1 }
@@ -100,17 +113,28 @@ class App extends React.Component {
         />
         {
           prevOn && data.map((e) => (
-            <Card
-              key={ e.cardName }
-              cardName={ e.cardName }
-              cardDescription={ e.cardDescription }
-              cardAttr1={ e.cardAttr1 }
-              cardAttr2={ e.cardAttr2 }
-              cardAttr3={ e.cardAttr3 }
-              cardImage={ e.cardImage }
-              cardRare={ e.cardRare }
-              cardTrunfo={ e.cardTrunfo }
-            />
+            <>
+              <Card
+                key={ e.cardName }
+                cardName={ e.cardName }
+                cardDescription={ e.cardDescription }
+                cardAttr1={ e.cardAttr1 }
+                cardAttr2={ e.cardAttr2 }
+                cardAttr3={ e.cardAttr3 }
+                cardImage={ e.cardImage }
+                cardRare={ e.cardRare }
+                cardTrunfo={ e.cardTrunfo }
+              />
+              <button
+                type="button"
+                id={ e.cardName }
+                data-testid="delete-button"
+                onClick={ this.btnDelete }
+                cardTrunfo={ e.cardTrunfo }
+              >
+                Excluir
+              </button>
+            </>
           ))
         }
       </div>
